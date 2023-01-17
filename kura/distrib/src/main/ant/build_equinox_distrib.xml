@@ -308,11 +308,22 @@ cp ${DIR}/framework/config.ini /tmp/.kura/configuration/
 
 KURA_RUNNING=`ps ax | grep java | grep "org.eclipse.equinox"`
 
+#get java version
+JAVA_VERSION=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}')
+JAVA_VERSION_NUM=$(echo "$JAVA_VERSION" | awk -F. '{printf("%03d%03d",$1,$2);}')
+
+OPEN_MODULE_OPTIONS=''
+
+if [ $JAVA_VERSION_NUM -gt 001008 ] ; then
+        OPEN_MODULE_OPTIONS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED"
+fi
+
 if [ -z "$KURA_RUNNING" ] ; then
         exec java -Xms${kura.mem.size} -Xmx${kura.mem.size} \
         -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/log/kura-heapdump.hprof \
         -XX:ErrorFile=/var/log/kura-error.log \
         -XX:+IgnoreUnrecognizedVMOptions \
+        ${OPEN_MODULE_OPTIONS} \
         --add-modules=ALL-SYSTEM \
         -Dkura.os.version=${kura.os.version} \
         -Dkura.arch=${kura.arch} \
@@ -350,6 +361,16 @@ cp ${DIR}/framework/config.ini /tmp/.kura/configuration/
 
 KURA_RUNNING=`ps ax | grep java | grep "org.eclipse.equinox"`
 
+#get java version
+JAVA_VERSION=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}')
+JAVA_VERSION_NUM=$(echo "$JAVA_VERSION" | awk -F. '{printf("%03d%03d",$1,$2);}')
+
+OPEN_MODULE_OPTIONS=''
+
+if [ $JAVA_VERSION_NUM -gt 001008 ] ; then
+        OPEN_MODULE_OPTIONS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED"
+fi
+
 if [ -z "$KURA_RUNNING" ] ; then
         exec java -Xms${kura.mem.size} -Xmx${kura.mem.size} \
         -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:/var/log/kura-gc.log \
@@ -357,6 +378,7 @@ if [ -z "$KURA_RUNNING" ] ; then
         -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/log/kura-heapdump.hprof \
         -XX:ErrorFile=/var/log/kura-error.log \
         -XX:+IgnoreUnrecognizedVMOptions \
+        ${OPEN_MODULE_OPTIONS} \
         --add-modules=ALL-SYSTEM \
         -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,suspend=n \
         -Dkura.os.version=${kura.os.version} \
@@ -396,11 +418,22 @@ cp ${DIR}/framework/config.ini /tmp/.kura/configuration/
 
 KURA_RUNNING=`ps ax | grep java | grep "org.eclipse.equinox"`
 
+#get java version
+JAVA_VERSION=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}')
+JAVA_VERSION_NUM=$(echo "$JAVA_VERSION" | awk -F. '{printf("%03d%03d",$1,$2);}')
+
+OPEN_MODULE_OPTIONS=''
+
+if [ $JAVA_VERSION_NUM -gt 001008 ] ; then
+        OPEN_MODULE_OPTIONS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED"
+fi
+
 if [ -z "$KURA_RUNNING" ] ; then
   nohup java -Xms${kura.mem.size} -Xmx${kura.mem.size} \
         -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/log/kura-heapdump.hprof \
         -XX:ErrorFile=/var/log/kura-error.log \
         -XX:+IgnoreUnrecognizedVMOptions \
+        ${OPEN_MODULE_OPTIONS} \
         --add-modules=ALL-SYSTEM \
         -Dkura.os.version=${kura.os.version} \
         -Dkura.arch=${kura.arch} \
