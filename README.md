@@ -22,7 +22,7 @@ Eclipse Kura™ runs on an edge gateway, which can be anything from a small SBC(
 
 ### What can Eclipse Kura™ do for me?
 * **Kura™ Services:** Provision and set up features to run on your gateway, such as an MQTT broker.
-* **Kura™ Networking:** Manage Network connectivity, including 
+* **Kura™ Networking:** Manage Network connectivity. 
 * **Kura™ Wires:** Design data flows and data processing streams effortlessly with a drag-and-drop visual editor.
 * **Kura™ Cloud Connectors:** Extendable cloud connector system. 
 * **Kura™ Drivers:** Extendable service that handles reading data off of external devices.
